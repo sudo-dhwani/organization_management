@@ -5,26 +5,37 @@ services:
     image: mysql:8.0
     container_name: mysql_container
     restart: always
+    env_file:
+      - .env  # Load environment variables from .env
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: organization_db
-      MYSQL_USER: root
-      MYSQL_PASSWORD: passwd123
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Run only on first creation
+
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+      start_period: 20s
 
   fastapi_app:
     build: .
     container_name: fastapi_container
     restart: always
     depends_on:
-      - db
+        db:
+          condition: service_healthy
+
+    env_file:
+      - .env  # Load environment variables
     environment:
-      DATABASE_URL: mysql+pymysql://dhwani:dhwani_password@db/organization_db
+      DATABASE_URL: ${DATABASE_URL} 
     ports:
-      - "8000:8000"
+      - "8080:8080"
     volumes:
       - .:/app
 

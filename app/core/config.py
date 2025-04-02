@@ -4,10 +4,10 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "Organization Management"
     
     # MySQL Database Configuration
-    MYSQL_USER: str = "root"
-    MYSQL_PASSWORD: str = "passwd123"
-    MYSQL_HOST: str = "localhost"
-    MYSQL_PORT: int = 3306
+    MYSQL_USER: str
+    MYSQL_PASSWORD: str
+    MYSQL_HOST: str
+    MYSQL_PORT: int
     MYSQL_DB: str = "organization_db"
     SECRET_KEY: str
 
