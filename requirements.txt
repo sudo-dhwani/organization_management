@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+sqlalchemy
+aiomysql
+passlib[bcrypt]
+python-jose[cryptography]
+celery
+redis
+pydantic

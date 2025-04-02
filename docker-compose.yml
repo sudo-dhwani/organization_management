@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql_container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: organization_db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: passwd123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  fastapi_app:
+    build: .
+    container_name: fastapi_container
+    restart: always
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: mysql+pymysql://dhwani:dhwani_password@db/organization_db
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+
+volumes:
+  mysql_data:
