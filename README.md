@@ -16,7 +16,7 @@ This is a **Practical Task** project for managing organizations and users using 
 
 ### 🔹 1. Clone the Repository
 ```bash
-git clone https://github.com/your-repo/organization_management.git
+git clone https://github.com/sudo-dhwani/organization_management.git
 cd organization_management
 
 - Create env file
